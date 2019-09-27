@@ -3,10 +3,10 @@ import json
 
 def requestGoTag(body, tagid= None):
     url = "http://localhost:1333/user_story/similar"
-    if tagid:
-        payload =  "{\n\t\"body\": \"" + body + "\",\n\t\"tagId\":" + str(tagid) + "\n}"
+    if tagid != None:
+        payload =  {"body": body,"tagId": tagid}
     else:
-        payload = "{\n\t\"body\": \"" + body + "\"\n}\n"
+        payload =  {"body": body,"tagId":-1}
 
     headers = {
         'Content-Type': "application/json",
@@ -21,7 +21,7 @@ def requestGoTag(body, tagid= None):
         'cache-control': "no-cache"
         }
 
-    response = requests.request("POST", url, data=payload, headers=headers)
+    response = requests.request("POST", url, json=payload, headers=headers)
     result = json.loads(response.text)
     return result
 
